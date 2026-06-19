@@ -1,20 +1,17 @@
-import pino from "pino";
+kind = "design"
+previewPath = "/__mockup"
+title = "Canvas"
+version = "1.0.0"
+id = "XegfDyZt7HqfW2Bb8Ghoy"
 
-const isProduction = process.env.NODE_ENV === "production";
+[[services]]
+localPort = 8081
+name = "Component Preview Server"
+paths = ["/__mockup"]
 
-export const logger = pino({
-  level: process.env.LOG_LEVEL ?? "info",
-  redact: [
-    "req.headers.authorization",
-    "req.headers.cookie",
-    "res.headers['set-cookie']",
-  ],
-  ...(isProduction
-    ? {}
-    : {
-        transport: {
-          target: "pino-pretty",
-          options: { colorize: true },
-        },
-      }),
-});
+[services.env]
+PORT = "8081"
+BASE_PATH = "/__mockup"
+
+[services.development]
+run = "pnpm --filter @workspace/mockup-sandbox run dev"
